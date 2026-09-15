@@ -108,8 +108,9 @@ app.get('/health', (req, res) => {
   });
 });
 
-// API Routes
+// API Routes (supported with or without /api prefix)
 app.use('/api', apiRoutes);
+app.use('/', apiRoutes);
 
 // Global Error Handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
