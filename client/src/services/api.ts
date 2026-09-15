@@ -9,7 +9,7 @@ import {
   TodayOverview
 } from '../types';
 
-const API_BASE = '/api';
+const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || '/api';
 
 function getHeaders(): HeadersInit {
   const token = localStorage.getItem('skillup_token');

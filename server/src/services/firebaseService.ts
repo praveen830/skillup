@@ -17,13 +17,17 @@ export function initFirebase(): Firestore | null {
   }
 
   try {
+    let serviceAccount: any = null;
     const serviceAccountPath = path.resolve(__dirname, '../../firebase-service-account.json');
-    if (!fs.existsSync(serviceAccountPath)) {
+    if (fs.existsSync(serviceAccountPath)) {
+      serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+    } else if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    } else {
       console.warn('⚠️ firebase-service-account.json not found at:', serviceAccountPath);
       return null;
     }
 
-    const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
     if (serviceAccount.private_key) {
       serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
     }
