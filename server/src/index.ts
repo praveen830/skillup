@@ -23,7 +23,17 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Health Check
+// Root & Health Check
+app.get('/', (req, res) => {
+  res.json({
+    name: 'SkillUp AI Backend API',
+    status: 'online',
+    version: '1.0.0',
+    health: '/health',
+    endpoints: '/api'
+  });
+});
+
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
